@@ -6,10 +6,18 @@ namespace WiredBrainCoffeeAdmin.Pages.Products
 {
     public class AddProductModel : PageModel
     {
+        [BindProperty]
         public Product NewProduct { get; set; }
 
         public void OnGet()
         {
+        }
+
+        public void OnPost()
+        {
+            // save product to database
+            var productName = NewProduct.Name;
+
         }
     }
 }
