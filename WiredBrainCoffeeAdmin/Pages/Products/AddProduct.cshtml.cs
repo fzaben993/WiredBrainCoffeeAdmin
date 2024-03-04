@@ -13,14 +13,16 @@ namespace WiredBrainCoffeeAdmin.Pages.Products
         {
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
             if (ModelState.IsValid)
             {
                 // save product to database
                 var productName = NewProduct.Name;
-            }
 
+                return RedirectToPage("ViewAllProducts");
+            }
+            return Page();
         }
     }
 }
