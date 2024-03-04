@@ -8,5 +8,10 @@ namespace WiredBrainCoffeeAdmin.Pages.Products
         public void OnGet()
         {
         }
+
+        public void OnPost()
+        {
+
+        }
     }
 }
