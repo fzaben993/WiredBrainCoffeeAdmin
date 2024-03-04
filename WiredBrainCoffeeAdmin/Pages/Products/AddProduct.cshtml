@@ -9,13 +9,14 @@
 <div class="row">
     <div class="col-md-6">
         <form method="post">
+            <div asp-validation-summary="All"></div>
             <div class="mb-3">
                 <label asp-for="NewProduct.Name">Name</label>
-                <input asp-for="NewProduct.Name" class="form-control" />
+                <input asp-for="NewProduct.Name" class="form-control"/>
             </div>
             <div class="mb-3">
                 <label asp-for="NewProduct.ShortDescription">Short Description</label>
-                <input asp-for="NewProduct.ShortDescription" class="form-control" />
+                <input asp-for="NewProduct.ShortDescription" class="form-control"/>
             </div>
             <div class="mb-3">
                 <label asp-for="NewProduct.Description">Description</label>
@@ -23,7 +24,7 @@
             </div>
             <div class="mb-3">
                 <label asp-for="NewProduct.Price">Price</label>
-                <input asp-for="NewProduct.Price" class="form-control" />
+                <input asp-for="NewProduct.Price" class="form-control"/>
             </div>
             <div class="mb-3">
                 <label asp-for="NewProduct.Category">Category</label>
@@ -32,7 +33,7 @@
                     <option value="Food">Food</option>
                 </select>
             </div>
-            
+
             <button class="btn btn-success" type="submit">Create</button>
         </form>
 
