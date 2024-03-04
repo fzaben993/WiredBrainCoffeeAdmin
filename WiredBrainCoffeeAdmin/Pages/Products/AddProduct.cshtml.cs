@@ -22,6 +22,7 @@ namespace WiredBrainCoffeeAdmin.Pages.Products
 
                 return RedirectToPage("ViewAllProducts");
             }
+
             return Page();
         }
     }
