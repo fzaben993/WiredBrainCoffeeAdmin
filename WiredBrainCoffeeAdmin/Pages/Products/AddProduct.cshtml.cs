@@ -7,10 +7,12 @@ namespace WiredBrainCoffeeAdmin.Pages.Products
     public class AddProductModel : PageModel
     {
         private WiredContext _wiredContext;
+        private IWebHostEnvironment _webHostEnvironment;
 
-        public AddProductModel(WiredContext context)
+        public AddProductModel(WiredContext context, IWebHostEnvironment webHostEnvironment)
         {
             _wiredContext = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [BindProperty]
@@ -20,18 +22,30 @@ namespace WiredBrainCoffeeAdmin.Pages.Products
         {
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                // save product to database
-                _wiredContext.Products.Add(NewProduct);
-                var changes = _wiredContext.SaveChanges();
-
-                return RedirectToPage("ViewAllProducts");
+                return Page();
             }
 
-            return Page();
+            if (NewProduct.Upload != null)
+            {
+                NewProduct.ImageFile = NewProduct.Upload.FileName;
+
+                var file = Path.Combine(_webHostEnvironment.WebRootPath, "images/menu", NewProduct.Upload.FileName);
+                using (var fileStream = new FileStream(file, FileMode.Create))
+                {
+                    await NewProduct.Upload.CopyToAsync(fileStream);
+                }
+            }
+            NewProduct.Created = DateTime.Now;
+
+                // save product to database
+                await _wiredContext.Products.AddAsync(NewProduct);
+                var changes = await _wiredContext.SaveChangesAsync();
+
+                return RedirectToPage("ViewAllProducts");
         }
     }
 }
