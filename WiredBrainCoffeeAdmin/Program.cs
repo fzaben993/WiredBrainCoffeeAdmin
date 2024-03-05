@@ -1,6 +1,7 @@
 using WiredBrainCoffeeAdmin.Data;
 using Microsoft.EntityFrameworkCore;
 using WiredBrainCoffeeAdmin.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,9 @@ builder.Services.AddDbContext<WiredContext>(options =>
 
 // Add services to the DI container.
 builder.Services.AddScoped<IProductService, ProductService>();
+
+// Registers HttpClientFactory and related services
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
