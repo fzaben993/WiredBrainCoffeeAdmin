@@ -25,7 +25,7 @@ namespace WiredBrainCoffeeAdmin.Pages.Products
         [BindProperty]
         public Product EditProduct { get; set; }
 
-        public async void OnGet()
+        public async Task OnGet()
         {
             EditProduct =  await _productService.GetById(Id);
         }
