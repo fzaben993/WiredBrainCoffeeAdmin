@@ -6,6 +6,13 @@ namespace WiredBrainCoffeeAdmin.Pages.Products
 {
     public class AddProductModel : PageModel
     {
+        private WiredContext _wiredContext;
+
+        public AddProductModel(WiredContext context)
+        {
+            _wiredContext = context;
+        }
+
         [BindProperty]
         public Product NewProduct { get; set; }
 
@@ -18,7 +25,8 @@ namespace WiredBrainCoffeeAdmin.Pages.Products
             if (ModelState.IsValid)
             {
                 // save product to database
-                var productName = NewProduct.Name;
+                _wiredContext.Products.Add(NewProduct);
+                var changes = _wiredContext.SaveChanges();
 
                 return RedirectToPage("ViewAllProducts");
             }
