@@ -11,9 +11,15 @@ public class ProductListViewComponent : ViewComponent
         _productService = productService;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync()
+    public async Task<IViewComponentResult> InvokeAsync(int count)
     {
         var products = await _productService.GetAll();
+
+        if (count > 0)
+        {
+            return View(products.Take(count).ToList());
+
+        }
 
         return View(products);
     }
