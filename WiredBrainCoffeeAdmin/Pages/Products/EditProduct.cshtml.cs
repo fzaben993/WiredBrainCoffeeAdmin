@@ -30,7 +30,7 @@ namespace WiredBrainCoffeeAdmin.Pages.Products
             EditProduct =  await _productService.GetById(Id);
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostEdit()
         {
             if (!ModelState.IsValid)
             {
@@ -53,6 +53,13 @@ namespace WiredBrainCoffeeAdmin.Pages.Products
             EditProduct.Id= Id;
             // save product to database
             await _productService.Update(EditProduct);
+
+            return RedirectToPage("ViewAllProducts");
+        }
+
+        public async Task<IActionResult> OnPostDelete()
+        {
+            await _productService.Delete(Id);
 
             return RedirectToPage("ViewAllProducts");
         }

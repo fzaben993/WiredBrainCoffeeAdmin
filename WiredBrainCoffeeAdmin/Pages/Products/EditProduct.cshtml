@@ -44,7 +44,9 @@
                 <input asp-for="EditProduct.Upload" class="form-control" />
             </div>
 
-            <button class="btn btn-success" type="submit">Edit</button>
+            <button asp-page-handler="edit" class="btn btn-success" type="submit">Edit</button>
+            <button asp-page-handler="delete" class="btn btn-danger float-end" >Delete</button>
+
         </form>
 
     </div>
