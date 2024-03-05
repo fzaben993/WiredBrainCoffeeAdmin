@@ -29,15 +29,7 @@ namespace WiredBrainCoffeeAdmin.Services
 
         public async Task Update(Product product)
         {
-            var storedProduct = await _wiredContext.Products.FirstOrDefaultAsync(p => p.Id == product.Id);
-
-            storedProduct.Name = product.Name;
-            storedProduct.Price = product.Price;
-            storedProduct.ImageFile = product.ImageFile;
-            storedProduct.Description = product.Description;
-            storedProduct.Category = product.Category;
-            
-            _wiredContext.Update(storedProduct);
+            _wiredContext.Entry(product).State = EntityState.Modified;
             await _wiredContext.SaveChangesAsync();
         }
 
