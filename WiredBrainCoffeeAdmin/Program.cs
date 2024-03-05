@@ -1,5 +1,6 @@
 using WiredBrainCoffeeAdmin.Data;
 using Microsoft.EntityFrameworkCore;
+using WiredBrainCoffeeAdmin.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<WiredContext>(options =>
        options.UseSqlServer(builder.Configuration.GetConnectionString("WiredBrain")));
+
+// Add services to the DI container.
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 

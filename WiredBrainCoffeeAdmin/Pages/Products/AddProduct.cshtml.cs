@@ -1,17 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WiredBrainCoffeeAdmin.Data;
+using WiredBrainCoffeeAdmin.Services;
 
 namespace WiredBrainCoffeeAdmin.Pages.Products
 {
     public class AddProductModel : PageModel
     {
-        private WiredContext _wiredContext;
+        private IProductService _productService;
         private IWebHostEnvironment _webHostEnvironment;
 
-        public AddProductModel(WiredContext context, IWebHostEnvironment webHostEnvironment)
+        public AddProductModel(
+            IProductService productService,
+            IWebHostEnvironment webHostEnvironment)
         {
-            _wiredContext = context;
+            _productService = productService;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -33,17 +36,18 @@ namespace WiredBrainCoffeeAdmin.Pages.Products
             {
                 NewProduct.ImageFile = NewProduct.Upload.FileName;
 
-                var file = Path.Combine(_webHostEnvironment.WebRootPath, "images/menu", NewProduct.Upload.FileName);
-                using (var fileStream = new FileStream(file, FileMode.Create))
-                {
-                    await NewProduct.Upload.CopyToAsync(fileStream);
-                }
+                var file = Path.Combine(_webHostEnvironment.WebRootPath,
+                    "images/menu",
+                    NewProduct.Upload.FileName);
+
+                await using var fileStream = new FileStream(file, FileMode.Create);
+
+                await NewProduct.Upload.CopyToAsync(fileStream);
             }
             NewProduct.Created = DateTime.Now;
 
                 // save product to database
-                await _wiredContext.Products.AddAsync(NewProduct);
-                var changes = await _wiredContext.SaveChangesAsync();
+                await _productService.Add(NewProduct);
 
                 return RedirectToPage("ViewAllProducts");
         }
